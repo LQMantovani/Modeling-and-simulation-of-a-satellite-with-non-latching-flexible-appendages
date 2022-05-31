@@ -1,0 +1,264 @@
+%The first body in always the main body
+%Always separate variables from the name with ':'
+%Units MUST be in the S.I.
+%Use '%' to comment the lines
+%Do not comment after a value of input line
+
+%Angular_pos in degrees
+%Main_position: Connection point of body i with body 1 (seen from the body i reference frame) written in body i reference frame
+%Body_position: Connection point of body 1 with body i (seen from the body 1 reference frame) written in body 1 reference frame
+
+System
+
+Altitude: 400e3
+Lambda: 0
+Delta:  0
+
+%Euler Angles -  quat: 0  , Quaternions - quat: 1
+quat: 1
+
+%Integrator Proprieties
+RelTol: 1e-11
+AbsTol: 1e-11
+MaxStep: 1e-4
+%MaxStep value of 1e-4 is enougth for rigid body. May be necessary to decrease it for flexbile body
+
+%Position control Gain
+K_p: 6;
+%Rotation control Gain
+K_r: 900;
+
+%To perform the FFT, set FFT as 1, otherwise set as 0
+FFT: 0
+%Use all the signal to perform FFT, set LFFT as 0. Otherwise set the initial time
+LFFT: 1.5
+%Sampling frequency for the FFT and PSD analysis
+FR: 4e3
+
+%To run the 3D animation set Animation as 1, otherwise set as 0
+Animation: 0
+
+%Scale to better visualize the vibration in the 3D animation
+scale: 5
+
+%Set to 1 to save the figures form the simulation output and some variables
+Save: 0
+
+%Use this option to lock the mechanism dynamics (0=free, 1=lock)
+Lock: 1
+%Use this option to 1 to use the Embedded reduction technique
+Embedded: 1
+
+Body: 1
+
+Name: HUB SPORT
+
+%keep Flexible_modes always =0 for the first body
+Flexible_modes: [0 0 0]
+
+mass: 8.5
+Inertia: [0.0362 -0.0001 0.0002; -0.0001 0.018 -0.0003; 0.0002 -0.0003 0.0469]
+Angular_pos: [30; 30; 30]*pi/180;
+%Angular velocity written in the Body system relative to the LVLH frame
+Angular_vel: [0;0;0]
+
+%Keep both vector equal to zero
+Main_position: [0;0;0]
+Body_position: [0;0;0]
+
+
+
+Body: 2
+
+Name: SLP boom
+
+mass: 0.00394
+Inertia: [863415.19 0 0; 0 4599.28 37246.15; 0 37246.15 860796.38]/(1e9)
+Angular_pos: [89.9205*0; 0; 0]*pi/180
+
+%Restrictions - position
+Main_position: [ 0; -0.00636; 0]
+Body_position: [69.7; -151.32; 53.81]/1e3
+
+%Restrictions - angles of rotation. Main_rotation - in which axis of the main body is the body rotating. Body_rotation - in which axis is the body rotating
+% X=1 Y=2 Z=3
+Main_rotation: 1
+Body_rotation: 1
+Constraint_type: 1
+
+%If the rotation of the body is positive regardin the first body, then Rot_Dir: 1, else Rot_Dir: -1
+Rot_Dir: 1
+
+%Limit_angle is always the absolute angle position, since the direction of rotation is given by Rot_Dir
+Limit_angle: 1.625198028010431
+
+%Angle of rest
+Angle_rest: 1.569410004444888
+
+%Proprieties
+Length: .15447
+Internal_Radius: 3/2000
+External_Radius: 5.0292/2000
+
+Young_module: 7.92895675e10
+Poisson: .33
+Structural_Damping: [0.005 0.005]
+Axis_Length: 2
+Flexible_modes: [0 0 2]
+%To set flexible bodies inertia matrices based on input inertia matrix
+Input_matrices: 0
+
+%Proprieties of the mass on the tip of the beam. Inertia in the end of the flexible beam
+Tip_mass: 0.03093
+Tip_Inertia: 2.25998e-06
+Tip_pos: 0.15447
+
+%Mechanism
+prmt: [0.284598077657527   0.005309656370683  77.804817599230091   0.003440196321132  34.980887237628139   0.112854773247831]
+
+Body: 3
+
+Name: SIP boom
+
+mass: 0.03248
+Inertia: [1043038.17 995.17 -0.33; 995.17 845.16 0.59;-0.33 059 1043039.12]/(1e9)
+Angular_pos: [92.31114*0; 180; 0]*pi/180
+
+%Restrictions - position
+Main_position: [ 0; -0.00636; 0]
+Body_position: [91.23; -151.32; -53.67]/1e3
+
+%Restrictions - angles of rotation. Main_rotation - in which axis of the main body is the body rotating. Body_rotation - in which axis is the body rotating
+% X=1 Y=2 Z=3
+Main_rotation: 1
+Body_rotation: 1
+Constraint_type: 1
+
+%If the rotation of the body is positive regardin the first body, then Rot_Dir: 1, else Rot_Dir: -1
+Rot_Dir: -1
+
+%Limit_angle is always the absolute angle position, since the direction of rotation is given by Rot_Dir
+Limit_angle: 1.656206313751979
+
+%Angle of rest
+Angle_rest: 1.611133343695897
+
+%Proprieties
+Length: .292
+Internal_Radius: 9.1/2000
+External_Radius: 10/2000
+
+Young_module: 110e9
+Poisson: .375
+Structural_Damping: [0.005 0.005]
+Axis_Length: 2
+Flexible_modes: [0 0 2]
+%To set flexible bodies inertia matrices based on input inertia matrix
+Input_matrices: 0
+
+%Proprieties of the mass on the tip of the beam. Inertia in the end of the flexible beam
+Tip_mass: 0.00914
+Tip_Inertia: 0
+Tip_pos: 0.04233
+
+%Mechanism
+prmt: [0.191733634923611   0.005087776536388  63.451118355194595   0.002455514924751  66.134598115927147   0.109887712201478]
+
+
+Body: 4
+
+Name: E-Field Boom X-
+
+mass: 0.00615
+Inertia: [654831.2 -0.1 47.87; -0.1 72.97 24.38;48.87 24.38 654831.35]/1e9
+Angular_pos: [-93.41*0; 90; 0]*pi/180
+
+%Restrictions - position
+Main_position: [0; -0.00636; 0]
+Body_position: [-111.76; -151.32; 29.27]/1e3
+
+%Restrictions - angles of rotation. Main_rotation - in which axis of the main body is the body rotating. Body_rotation - in which axis is the body rotating
+% X=1 Y=2 Z=3
+Main_rotation: 3
+Body_rotation: 1
+Constraint_type: 1
+
+%If the rotation of the body is positive regardin the first body, then Rot_Dir: 1, else Rot_Dir: -1
+Rot_Dir: 1
+
+%Limit_angle is always the absolute angle position, since the direction of rotation is given by Rot_Dir
+Limit_angle: 1.698637581590791
+
+%Angle of rest
+Angle_rest: 1.629560651375148
+
+%Proprieties
+Length: 0.28477
+Internal_Radius: 3/2000
+External_Radius: 5.0292/2000
+
+Young_module: 7.92895675e10
+Poisson: .33
+Structural_Damping: [0.005 0.005]
+Axis_Length: 2
+Flexible_modes: [0 0 2]
+%To set flexible bodies inertia matrices based on input inertia matrix
+Input_matrices: 0
+
+%Proprieties of the mass on the tip of the beam. Inertia in the end of the flexible beam
+Tip_mass: 0.00576
+Tip_Inertia: 0
+Tip_pos: 0.28477
+
+%Mechanism
+prmt: 10^2*[0.003357902805474   0.000070462751829   1.284887711799759   0.000013618397850   0.382963317387435   0.000711824352179]
+
+
+
+Body: 5
+
+Name: E-Field Boom X+
+
+mass: 0.00615
+Inertia: [654831.2 -0.1 47.87; -0.1 72.97 24.38;48.87 24.38 654831.35]/1e9
+Angular_pos: [93.41*0; 90; 0]*pi/180
+
+%Restrictions - position
+Main_position: [ 0; -0.00636; 0]
+Body_position: [116.32; -151.32; 29.27]/1e3
+
+%Restrictions - angles of rotation. Main_rotation - in which axis of the main body is the body rotating. Body_rotation - in which axis is the body rotating
+% X=1 Y=2 Z=3
+Main_rotation: 3
+Body_rotation: 1
+Constraint_type: 1
+
+%If the rotation of the body is positive regardin the first body, then Rot_Dir: 1, else Rot_Dir: -1
+Rot_Dir: -1
+
+%Limit_angle is always the absolute angle position, since the direction of rotation is given by Rot_Dir
+Limit_angle: 1.698637581590791
+
+%Angle of rest
+Angle_rest: 1.629560651375148
+
+%Proprieties
+Length: 0.28477
+Internal_Radius: 3/2000
+External_Radius: 5.0292/2000
+
+Young_module: 7.92895675e10
+Poisson: .33
+Structural_Damping: [0.005 0.005]
+Axis_Length: 2
+Flexible_modes: [0 0 2]
+%To set flexible bodies inertia matrices based on input inertia matrix
+Input_matrices: 0
+
+%Proprieties of the mass on the tip of the beam. Inertia in the end of the flexible beam
+Tip_mass: 0.00576
+Tip_Inertia: 0
+Tip_pos: 0.28477
+
+%Mechanism
+prmt: 10^2*[0.003357902805474   0.000070462751829   1.284887711799759   0.000013618397850   0.382963317387435   0.000711824352179]
